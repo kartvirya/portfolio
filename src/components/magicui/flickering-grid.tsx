@@ -165,6 +165,9 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 
     let animationFrameId: number
     let gridParams: ReturnType<typeof setupCanvas>
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches
 
     const updateCanvasSize = () => {
       const newWidth = width || container.clientWidth
@@ -182,7 +185,9 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       const deltaTime = (time - lastTime) / 1000
       lastTime = time
 
-      updateSquares(gridParams.squares, deltaTime)
+      if (!prefersReducedMotion) {
+        updateSquares(gridParams.squares, deltaTime)
+      }
       drawGrid(
         ctx,
         canvas.width,
@@ -192,7 +197,9 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
         gridParams.squares,
         gridParams.dpr
       )
-      animationFrameId = requestAnimationFrame(animate)
+      if (!prefersReducedMotion) {
+        animationFrameId = requestAnimationFrame(animate)
+      }
     }
 
     const resizeObserver = new ResizeObserver(() => {
@@ -225,6 +232,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
     <div
       ref={containerRef}
       className={cn(`h-full w-full ${className}`)}
+      aria-hidden
       {...props}
     >
       <canvas

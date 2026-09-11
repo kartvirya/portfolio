@@ -26,17 +26,17 @@ const BlurFade = ({
   yOffset = 6,
   inView = false,
   inViewMargin = "-50px",
-  blur = "6px",
 }: BlurFadeProps) => {
   const ref = useRef(null);
   const inViewResult = useInView(ref, {
     once: true,
-    ...(inViewMargin ? { margin: inViewMargin as any } : {})
+    ...(inViewMargin ? { margin: inViewMargin as any } : {}),
   });
   const isInView = !inView || inViewResult;
+  // Opacity + transform only — filter/blur is not compositor-friendly
   const defaultVariants: Variants = {
-    hidden: { y: -yOffset, opacity: 0, filter: `blur(${blur})` },
-    visible: { y: 0, opacity: 1, filter: `blur(0px)` },
+    hidden: { y: -yOffset, opacity: 0 },
+    visible: { y: 0, opacity: 1 },
   };
   const combinedVariants = variant || defaultVariants;
   return (

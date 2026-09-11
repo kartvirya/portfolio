@@ -9,14 +9,14 @@ import { Python } from "@/components/ui/svgs/python";
 export const DATA = {
   name: "Bikash Sharma",
   initials: "BS",
-  url: "https://github.com/kartvirya",
+  url: "https://portfolio-kohl-seven-pkizjvlyiv.vercel.app",
   location: "Kathmandu, Nepal",
   locationLink: "https://www.google.com/maps/place/Kathmandu,+Nepal",
   description:
     "Full Stack UI/UX focused developer with a security-first mindset. Building products with SvelteKit, Django, and AI-assisted workflows.",
   summary:
     "Full Stack UI/UX focused developer with a security-first mindset, working with SvelteKit, Django, and modern web stacks. Experienced across the full product lifecycle, from designing scalable backend architecture and REST APIs to building performant, accessible frontend interfaces. Background in penetration testing and vulnerability assessment adds security awareness to development work. Delivered 7+ full-stack projects for international clients on Fiverr, and actively expand web security expertise through bug bounty research on HackerOne.",
-  avatarUrl: "/me.png",
+  avatarUrl: "/me.webp",
   skills: [
     { name: "React", icon: ReactLight },
     { name: "Next.js", icon: NextjsIconDark },
@@ -71,7 +71,7 @@ export const DATA = {
       badges: [],
       location: "Remote",
       title: "Fullstack Developer",
-      logoUrl: "/outix.png",
+      logoUrl: "/outix.webp",
       start: "Dec 2024",
       end: "Present",
       description:
@@ -83,7 +83,7 @@ export const DATA = {
       badges: [],
       location: "Remote",
       title: "SEO Officer and Web Developer",
-      logoUrl: "/v7os.png",
+      logoUrl: "/v7os.webp",
       start: "2024",
       end: "Present",
       description:
@@ -95,7 +95,7 @@ export const DATA = {
       badges: [],
       location: "Nepal",
       title: "Junior Security Analyst",
-      logoUrl: "/bugv.png",
+      logoUrl: "/bugv.webp",
       start: "Sept 2023",
       end: "Dec 2024",
       description:
@@ -107,7 +107,7 @@ export const DATA = {
       badges: [],
       location: "Nepal",
       title: "Digital Marketing and SEO Officer",
-      logoUrl: "/bugv.png",
+      logoUrl: "/bugv.webp",
       start: "Feb 2022",
       end: "July 2023",
       description:
@@ -119,7 +119,7 @@ export const DATA = {
       badges: [],
       location: "Kathmandu, Nepal",
       title: "Technical Support Representative",
-      logoUrl: "/subisu.png",
+      logoUrl: "/subisu.webp",
       start: "Feb 2022",
       end: "July 2023",
       description:
@@ -132,7 +132,7 @@ export const DATA = {
       href: "https://www.lbef.edu.np",
       degree:
         "Bachelor's in Computer Science & Information Technology (BScIT)",
-      logoUrl: "/lbef.png",
+      logoUrl: "/lbef.webp",
       start: "2022",
       end: "2025",
     },
@@ -140,7 +140,7 @@ export const DATA = {
       school: "Liverpool International College",
       href: "https://liverpool.edu.np",
       degree: "+2 in Management | GPA: 3.4",
-      logoUrl: "/liverpool.png",
+      logoUrl: "/liverpool.webp",
       start: "2018",
       end: "2020",
     },
@@ -148,7 +148,7 @@ export const DATA = {
       school: "The Insight Vision School, Kathmandu",
       href: "https://tivs.edu.np",
       degree: "SEE | GPA: 3.55",
-      logoUrl: "/insight-vision.png",
+      logoUrl: "/insight-vision.webp",
       start: "2018",
       end: "2018",
     },
