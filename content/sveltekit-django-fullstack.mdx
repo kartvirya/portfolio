@@ -1,0 +1,72 @@
+---
+title: "Why I Build Full-Stack Apps with SvelteKit and Django"
+publishedAt: "2025-06-10"
+updatedAt: "2025-06-10"
+author: "Bikash Sharma"
+summary: "SvelteKit on the front, Django on the back: the pairing I use daily on production platforms. Here's how they complement each other and where I draw the boundaries."
+image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=192&fit=crop"
+---
+
+# Why I Build Full-Stack Apps with SvelteKit and Django
+
+I get asked a lot why I pair SvelteKit with Django instead of going all-in on one framework or using the classic React + Node stack. It's not nostalgia — each half is the best tool I know for its job, and together they cover the full product lifecycle cleanly.
+
+<MediaContainer
+  src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&fit=crop"
+  alt="Code on a screen"
+/>
+
+## The frontend: SvelteKit
+
+SvelteKit gives me a fast, reactive UI without a heavy client runtime. What I value most:
+
+- **Less boilerplate than React.** Components are closer to plain HTML, so UI work moves quickly.
+- **Fine-grained reactivity.** No re-render waterfalls; updates touch only the DOM nodes that change.
+- **First-class routing and SSR** out of the box, which matters for SEO and perceived performance.
+- **Easy adapters** — I can deploy the same app to Vercel, Node, or static hosting.
+
+## The backend: Django + DRF
+
+Django is where the boring, reliable parts of a product live:
+
+- **The ORM and migrations** make schema evolution feel safe, even as models grow.
+- **The admin panel** is a free internal tool for managing data — I ship it for staff-facing workflows almost every time.
+- **Django REST Framework** gives me consistent serializers, viewsets, and authentication that map cleanly to frontends.
+- **Security defaults** help me avoid beginner mistakes — CSRF, password hashing, SQL injection protection are handled by the framework.
+
+## Where I draw the line
+
+| Concern | Tool |
+|---------|------|
+| UI, routing, SSR, interactions | SvelteKit |
+| API, auth, business logic, data | Django + DRF |
+| Real-time / live updates | WebSockets via Django Channels |
+| Static content & assets | SvelteKit static build |
+
+For real-time order tracking and live dashboards, SvelteKit listens to a WebSocket channel while Django owns the source of truth. That keeps me from duplicating state on both sides.
+
+## A concrete pattern
+
+```ts
+// src/lib/api.ts
+export async function api<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(`/api${path}`, {
+    ...init,
+    headers: {
+      "Content-Type": "application/json",
+      ...init?.headers,
+    },
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: res.statusText }));
+    throw new Error(err.detail ?? "Request failed");
+  }
+  return res.json() as Promise<T>;
+}
+```
+
+On the Django side, every endpoint I expose follows three rules: a documented serializer, an explicit permission class, and a test covering the unhappy path.
+
+## When I'd pick something else
+
+SvelteKit + Django isn't a religion. If the product is mostly a static site, I reach for Next.js. If the team is all-in on TypeScript end-to-end, Next.js or NestJS with Prisma wins. But for a product with meaningful business logic — dashboards, ordering systems, e-commerce — this pairing has carried me through production work consistently.

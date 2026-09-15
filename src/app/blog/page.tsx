@@ -2,15 +2,20 @@ import BlurFade from "@/components/magicui/blur-fade";
 import { allPosts } from "content-collections";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { DATA } from "@/data/resume";
 import { paginate, normalizePage } from "@/lib/pagination";
 import { ChevronRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Blog",
   description: "Thoughts on software development, life, and more.",
+  alternates: {
+    canonical: `${DATA.url}/blog`,
+  },
   openGraph: {
     title: "Blog",
     description: "Thoughts on software development, life, and more.",
+    url: `${DATA.url}/blog`,
   },
   twitter: {
     card: "summary_large_image",

@@ -1,0 +1,55 @@
+---
+title: "My First Year of Bug Bounty Hunting on HackerOne"
+publishedAt: "2025-03-18"
+updatedAt: "2025-03-18"
+author: "Bikash Sharma"
+summary: "How I went from full-stack developer to bug bounty hunter — and the methodology that helped me get real reports accepted, including on major platforms like inDrive."
+image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=192&fit=crop"
+---
+
+# My First Year of Bug Bounty Hunting on HackerOne
+
+I didn't start out as a security researcher. I was building web apps — React frontends, Django backends, REST APIs. But every time I wrote authentication logic or an upload handler, I kept asking the same question: *what happens if someone sends this a request I didn't expect?*
+
+That question turned me into a penetration tester and, eventually, an active bug bounty researcher on HackerOne. Here's what actually worked for me in that first year.
+
+## The mindset shift
+
+Most developers test for "does it work?" Bug bounty teaches you to test for "what happens if it works *wrong*?" Your job isn't to break the app — it's to find where reality doesn't match the developer's assumptions.
+
+<MediaContainer
+  src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&fit=crop"
+  alt="Cybersecurity concept"
+/>
+
+## Where to focus as a beginner
+
+Spraying every endpoint with every vulnerability class is noise. I got accepted reports faster when I focused on a handful of high-signal areas:
+
+- **Broken auth and session logic** — password reset flows, OTP bypasses, JWT handling.
+- **IDOR / broken access control** — can I read or modify another user's resource by swapping an ID?
+- **Input validation gaps** — reflected and stored XSS in search, comments, and exported data.
+- **Rate limiting on sensitive actions** — OTP brute force, account enumeration, unrealistic reset limits.
+
+## My repeatable checklist
+
+1. Map every endpoint and document the expected behaviour.
+2. Test authorization first (is the check on the client or the server?).
+3. Tamper with every ID, slug, and reference you can reach.
+4. Test with real role changes, not just the happy path.
+5. Write the report as if the developer has no context — include the impact.
+
+## Reporting that gets accepted
+
+A valid bug with a bad report is often closed faster than a duplicate with a great one. I learned to include:
+
+- A short, human-readable summary of the impact.
+- Exact reproduction steps with requests and responses.
+- A clear security impact — what attacker goal does this enable?
+- A suggested fix, even if rough.
+
+## What it did for my development work
+
+This is the underrated payoff. Because I constantly review apps as an attacker, I now write code with the same eyes. My resumes, permissions checks, and input handling are far more deliberate. That security-first mindset is the single biggest differentiator in my full-stack work today.
+
+If you build web apps, do yourself a favour: spend three months learning how to break them. You'll come back a better developer — and occasionally, HackerOne will even pay you for the privilege.

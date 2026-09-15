@@ -1,0 +1,66 @@
+---
+title: "How I Built a QR Ordering System for Restaurants with Django and React"
+publishedAt: "2026-02-14"
+updatedAt: "2026-02-14"
+author: "Bikash Sharma"
+summary: "A deep dive into building a full-stack QR-based food ordering system — table scanning, real-time order tracking, billing, analytics, and the hard parts."
+image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=192&fit=crop"
+---
+
+# How I Built a QR Ordering System for Restaurants with Django and React
+
+One of my favourite projects is a production-oriented QR ordering system for restaurants and hotels. Customers scan a QR code at their table, browse a digital menu, and order straight to the kitchen — no app download, no waiter visit needed. Here's how I structured it.
+
+<MediaContainer
+  src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&fit=crop"
+  alt="Restaurant table with QR menu"
+/>
+
+## The core flow
+
+1. Vendor signs up and builds a menu per outlet (categories, items, modifiers, prices).
+2. System generates a unique QR code per table or room.
+3. Customer scans → lands on `/{outlet-slug}/{table-id}` → orders.
+4. Kitchen dashboard shows live orders; staff updates status (received → preparing → served).
+5. Customer sees order status in real time; billing is itemised and paid at checkout.
+
+## Architecture
+
+I went with a **Django REST backend** and a **React (TypeScript) SPA** on separate deployments.
+
+- **Django + PostgreSQL** owns data and the ordering API.
+- **Authentication**: JWT for staff, session-less and scoped for customers.
+- **Real-time updates**: WebSocket channel for order status so the customer view and kitchen dashboard stay in sync.
+- **Redis** as the channel layer and for rate limiting QR scans.
+
+## The data model that matters
+
+```python
+class Order(models.Model):
+    outlet = models.ForeignKey(Outlet, on_delete=models.CASCADE)
+    table = models.ForeignKey(Table, on_delete=models.CASCADE)
+    status = models.CharField(choices=OrderStatus.choices, default="received")
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2)
+```
+
+I store `unit_price` on the `OrderItem` snapshot at order time — never rely on the live `MenuItem` price later, because menus change and you need an immutable bill.
+
+## Lessons from shipping it
+
+- **Idempotency beats retries.** A double-tap on "Place Order" creating two orders is the bug every ordering system must kill. I dedupe by a client-generated `request_id`.
+- **Atomicity for stock-bound items.** Decrement stock in the same transaction as order creation, or you'll oversell on the open/close rush.
+- **QR codes are cheap; scope them.** Shorten the payload to something like `/o/{outlet}/{table}` and keep the real table data server-side.
+- **Admin analytics matter to the vendor.** Gross revenue, items sold, peak hours, table turnover — an analytics dashboard is what turns a gimmick into a purchase.
+- **Security still applies to food orders.** Amount tampering on item prices is the exact bug I hunt for in bug bounty — so I validate totals server-side, always.
+
+## What I'd do differently
+
+I'd put more effort into offline/queueing for spotty restaurant WiFi and add Kitchen Display Screen (KDS) routing with item-level prioritisation. Both are the difference between "demo" and "daily driver" for a busy kitchen.
+
+This project is open source on my GitHub — the backend and frontend are separate repos, and it remains one of the strongest talking points in my interviews.

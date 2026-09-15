@@ -14,8 +14,60 @@ import { ArrowUpRight } from "lucide-react";
 const BLUR_FADE_DELAY = 0.04;
 
 export default function Page() {
+  const jsonLdContent = JSON.stringify([
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: DATA.name,
+      url: DATA.url,
+      image: `${DATA.url}${DATA.avatarUrl}`,
+      jobTitle: "Full Stack Developer",
+      worksFor: [
+        {
+          "@type": "Organization",
+          name: "Outix",
+          url: "https://outix.co",
+        },
+        {
+          "@type": "Organization",
+          name: "V7 OS",
+          url: "https://v7os.ae",
+        },
+      ],
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Kathmandu",
+        addressCountry: "NP",
+      },
+      email: "mailto:bikashtail619@gmail.com",
+      alumniOf: DATA.education.map((edu) => ({
+        "@type": "CollegeOrUniversity",
+        name: edu.school,
+        url: edu.href,
+      })),
+      knowsAbout: DATA.skills.map((skill) => skill.name),
+      sameAs: [
+        "https://github.com/kartvirya",
+        "https://www.linkedin.com/in/",
+      ],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: DATA.name,
+      url: DATA.url,
+      description: DATA.description,
+    },
+  ])
+    .replace(/</g, "\\u003c");
+
   return (
     <main className="min-h-dvh flex flex-col gap-14 relative">
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: jsonLdContent }}
+      />
       <section id="hero">
         <div className="mx-auto w-full max-w-2xl space-y-8">
           <div className="gap-2 gap-y-6 flex flex-col md:flex-row justify-between">

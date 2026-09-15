@@ -47,6 +47,10 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: {
+      canonical: `${DATA.url}/blog/${slug}`,
+    },
+    authors: [{ name: DATA.name, url: DATA.url }],
     openGraph: {
       title,
       description,
@@ -68,6 +72,10 @@ export async function generateMetadata({
       ...(image && {
         images: [`${DATA.url}${image}`],
       }),
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
   };
 }

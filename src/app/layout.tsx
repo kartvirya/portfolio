@@ -3,7 +3,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { DATA } from "@/data/resume";
 import { cn } from "@/lib/utils";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
@@ -27,6 +27,26 @@ export const metadata: Metadata = {
     template: `%s | ${DATA.name}`,
   },
   description: DATA.description,
+  keywords: [
+    "Bikash Sharma",
+    "Full Stack Developer",
+    "UI/UX Developer",
+    "SvelteKit",
+    "Django",
+    "Next.js",
+    "React",
+    "Penetration Testing",
+    "Bug Bounty",
+    "SEO",
+    "Kathmandu",
+    "Nepal",
+  ],
+  creator: DATA.name,
+  publisher: DATA.name,
+  authors: [{ name: DATA.name, url: DATA.url }],
+  alternates: {
+    canonical: DATA.url,
+  },
   openGraph: {
     title: `${DATA.name}`,
     description: DATA.description,
@@ -50,10 +70,22 @@ export const metadata: Metadata = {
     title: `${DATA.name}`,
     card: "summary_large_image",
   },
-  verification: {
-    google: "",
-    yandex: "",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
   },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/me.png",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#09090b" },
+  ],
 };
 
 export default function RootLayout({

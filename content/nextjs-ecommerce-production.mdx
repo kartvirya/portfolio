@@ -1,0 +1,62 @@
+---
+title: "Building a Production-Ready E-Commerce Platform with Next.js"
+publishedAt: "2026-05-08"
+updatedAt: "2026-05-08"
+author: "Bikash Sharma"
+summary: "A practical walkthrough of building an e-commerce product with Next.js — catalog, cart, wishlist, auth, payments, and the decisions that matter."
+image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=192&fit=crop"
+---
+
+# Building a Production-Ready E-Commerce Platform with Next.js
+
+I've spent the last while building a production-oriented e-commerce platform with Next.js — product catalog, shopping cart, wishlist, NextAuth authentication, an admin analytics dashboard, payment gateway integration, and logistics. Here's the developer's-eye view of what actually matters.
+
+<MediaContainer
+  src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&fit=crop"
+  alt="E-commerce checkout"
+/>
+
+## The stack in practice
+
+- **Next.js + TypeScript** for the app shell, routing, and server components.
+- **PostgreSQL + Prisma** for the data layer — typed queries and painless migrations.
+- **NextAuth** for authentication, with role-based access for customers vs admins.
+- **Tailwind CSS** for rapid, consistent UI.
+- **Payment** integration with a local gateway (eSewa in this case) plus logistics providers.
+
+## The parts that decide success
+
+### Product catalogue
+This is boring but make-or-break. Categories, variants (size/colour), images, stock tracking, SKUs, and search that doesn't fall apart.
+
+### Cart correctness
+The cart is where money bugs live. I keep the cart in the database for signed-in users (synced across devices), enforce server-side price checks at checkout, and never trust the client for totals.
+
+### The checkout flow
+- A single, short checkout — every extra field kills conversions.
+- Stock checked again *at order placement*, in a transaction.
+- Payment token verified server-side; the order only becomes "placed" after a successful callback, never on a redirect guess.
+
+### Admin analytics
+The admin panel is what vendors actually live in: orders, inventory, revenue by day/week, top products, low-stock alerts, and customer lists.
+
+## A move I'd make again
+
+```ts
+// src/lib/order.ts
+export async function placeOrder(userId: string, requestId: string) {
+  // idempotent: same requestId returns the existing order
+  // re-verify prices from DB, not the client cart
+  // decrement stock and create order in one transaction
+}
+```
+
+Client-generated `requestId` plus server-side re-verification eliminated double-orders and price-tampering in one move. Half of "production-ready" is just refusing to trust the browser.
+
+## What I learned shipping it
+
+- E-commerce is 20% nice UI and 80% transactional correctness, stock state, and failure handling.
+- Local payment gateways have quirks — build a thin provider interface so you can swap them.
+- Analytics is a retention feature, not a nice-to-have. Vendors stay for the numbers.
+
+This project taught me more about state, transactions, and defensive design than any tutorial. If you're building one, start with a single variant product, get the whole order loop working end to end, then add complexity.

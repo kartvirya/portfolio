@@ -1,0 +1,54 @@
+---
+title: "My AI-Assisted Development Workflow: Shipping Full-Stack Products Faster"
+publishedAt: "2025-11-30"
+updatedAt: "2025-11-30"
+author: "Bikash Sharma"
+summary: "How I pair AI coding tools with deliberate review practices to build full-stack products faster — without shipping code I don't understand."
+image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=192&fit=crop"
+---
+
+# My AI-Assisted Development Workflow
+
+I use AI tools every day — Cursor, Bolt.new, Lovable, and LLM agents — and they've genuinely changed how much I can ship. But there's a line between *using* AI as leverage and *abdicating* to it. Here's the workflow that keeps me fast and honest.
+
+<MediaContainer
+  src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&fit=crop"
+  alt="AI and code"
+/>
+
+## Where AI genuinely helps me
+
+- **Boilerplate and scaffolding.** Starting a Django app, wiring auth, standing up a Next.js route — the boring 80% that takes hours by hand.
+- **Explaining unfamiliar code.** Pasted a library you've never seen? A quick summarisation beats reading 500 lines.
+- **Fast prototypes.** For validating an idea or showing a client a direction, generating a working slice is unbeatable.
+- **Tests and fixtures.** Generating test cases for edge conditions I haven't thought of yet.
+
+## Where I refuse to let AI decide
+
+- **Architecture.** The trade-offs between Django and Next.js, where to put business logic, how to model the data — that's my call.
+- **Security.** AI tools hallucinate "secure" code all the time. Auth, permissions, input handling — I review these line by line, and because I do bug bounty, I even attack AI-generated code like a target.
+- **The final review.** Every line goes through my brain before it ships. If I can't explain it, it doesn't merge.
+
+## My actual loop
+
+1. Break the feature into small, verifiable slices.
+2. Have the AI draft the slice with explicit constraints (framework, patterns, test requirements).
+3. Review the diff for correctness, security, and style.
+4. Write or verify the tests — happy path *and* the failure path.
+5. Ship small and iterate.
+
+## The pitch
+
+```text
+You are helping me build a feature in [stack].
+- Follow existing project conventions.
+- Do not introduce new dependencies unless I ask.
+- Prioritise security (input validation, auth checks, safe queries).
+- Show the changed files and explain what each does.
+```
+
+That last line is the kicker: if the tool can't explain it, neither will I — and that's the moment to slow down.
+
+## What it changed in my output
+
+Since adopting this workflow, I've shipped production e-commerce, inventory, and ordering systems with far less grind. The key is that AI doesn't replace review — it accelerates the gap *between* reviews. The moment I treat generated code as reviewable draft instead of finished work, everything got faster and safer at the same time.
