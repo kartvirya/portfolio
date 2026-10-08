@@ -48,7 +48,7 @@ export default function Page() {
       knowsAbout: DATA.skills.map((skill) => skill.name),
       sameAs: [
         "https://github.com/kartvirya",
-        "https://www.linkedin.com/in/",
+        "https://www.linkedin.com/in/bikashsharma619/",
       ],
     },
     {

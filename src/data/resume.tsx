@@ -9,7 +9,7 @@ import { Python } from "@/components/ui/svgs/python";
 export const DATA = {
   name: "Bikash Sharma",
   initials: "BS",
-  url: "https://portfolio-kohl-seven-pkizjvlyiv.vercel.app",
+  url: "https://bikashsharma.com",
   location: "Kathmandu, Nepal",
   locationLink: "https://www.google.com/maps/place/Kathmandu,+Nepal",
   description:
@@ -50,10 +50,9 @@ export const DATA = {
       },
       LinkedIn: {
         name: "LinkedIn",
-        // Replace with your LinkedIn profile URL when ready
-        url: "https://www.linkedin.com/in/",
+        url: "https://www.linkedin.com/in/bikashsharma619/",
         icon: Icons.linkedin,
-        navbar: false,
+        navbar: true,
       },
       email: {
         name: "Send Email",
